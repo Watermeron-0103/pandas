@@ -30,3 +30,7 @@ df = df.rename(columns={'名称\nPart name': '名称', '文書番号\nDocument n
 df.rename(columns={'種類 Type\n  クリティカル    Critical\n  非クリティカル Non-Critical': '種類'}, inplace=True)
 ```
 
+# How to check the type
+```python
+
+```
