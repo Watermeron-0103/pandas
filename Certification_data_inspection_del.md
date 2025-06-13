@@ -1,4 +1,4 @@
-Delete only the specified data, str
+# Delete only the specified data, str
 
 ```python
 import pandas as pd
@@ -24,14 +24,20 @@ with pd.ExcelWriter(save_path, engine='openpyxl', mode='a', if_sheet_exists="rep
     df_old.to_excel(writer, sheet_name='certification_data_isp_del_old', index=False)
 ```
 
-Extract only the specified values
+# Extract only the specified values
+In multiple cases
 ```python
-import pandas as pd
-
-
-file_path = "受入れ検査品リスト.xlsx"
-df = pd.read_excel(file_path, sheet_name=0)
+df = pd.read_excel("inspection_list.xlsx", sheet_name=0)
 
 keep_list = ["PA-IP22-610", "PA-IP19-903"]
 df = df[df["文書番号"].isin(keep_list)]
+print(df)
+```
+
+In the case of individuality
+```python
+df = pd.read_excel("inspection_list.xlsx", sheet_name=0)
+
+result = df[df["検査種別"] == 'データ検査']
+print(result)
 ```
