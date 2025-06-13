@@ -16,7 +16,7 @@ Export this DataFrame to Excel as tools_list_by_part.xlsx.
 Short Explanation:
 This code reads an Excel file, groups data by inspection part number, lists all measuring tools for each part (ignoring missing values), then saves the results in a new Excel file, with tool lists stored as JSON strings.
 
-<pre>```python</pre>
+```
 import pandas as pd
 import json
 
@@ -33,5 +33,5 @@ for part_no, tools in tool_dict.items():
 
 df_out = pd.DataFrame(rows)
 df_out.to_excel("tools_list_by_part.xlsx", index=False)
-<pre>```</pre>
+```
 
