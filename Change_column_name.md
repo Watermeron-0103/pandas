@@ -12,7 +12,10 @@ print(df.columns)
 
 # If you want to get the column names in a list:
 print(df.columns.to_list())
+```
 
+Change the column name
+```
 # Rename columns in a DataFrame
 df.columns = ['新しいカラム1', '新しいカラム2', ...]
 
