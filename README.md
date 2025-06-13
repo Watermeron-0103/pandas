@@ -1,21 +1,6 @@
-# [pandas] test_list to json strings.
-Pseudocode / Step-by-Step Plan:
+# [lambda式] ["1", "2", "3"] format
 
-Import pandas and json.
-
-Load the first sheet of the Excel file src/受検S-235.xlsx into a DataFrame.
-
-Group the data by '検査品番' (inspection part number) and collect non-null values of '測定具' (measuring tools) for each group into lists.
-
-For each part number and its list of tools, serialize the tool list into JSON, and append a dictionary to rows.
-
-Convert rows to a new DataFrame.
-
-Export this DataFrame to Excel as tools_list_by_part.xlsx.
-
-Short Explanation:
-This code reads an Excel file, groups data by inspection part number, lists all measuring tools for each part (ignoring missing values), then saves the results in a new Excel file, with tool lists stored as JSON strings.
-
+How to make lambda expression in the format ["1", "2", "3"]
 ```
 import pandas as pd
 import json
