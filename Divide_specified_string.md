@@ -1,6 +1,6 @@
 # Divide by the specified string
 
-```
+```python
 # Get unique assignees in the 'Assignee' column
 inspectors = df['記録者'].unique()
 
@@ -11,7 +11,7 @@ for inspector in inspectors:
 
 # +Create a folder for each one and store them
 
-```
+```python
 import os
 import pandas as pd
 
