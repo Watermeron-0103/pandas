@@ -1,6 +1,7 @@
 
 部品番号列が重複していて、さらにサプライヤ列が別々の部品を抽出
 
+# The part number column is duplicated, and the supplier column extracts different parts.
 ```python
 import pandas as pd
 
