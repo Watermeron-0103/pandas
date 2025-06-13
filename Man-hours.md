@@ -27,7 +27,7 @@ Short Explanation:
 This code reads an Excel file listing part numbers and their associated tool lists, looks up the standard time for each tool, calculates the total standard time for each part number, and writes the results (part number, tool list, total time) to a new Excel file.
 
 
-
+```
 import pandas as pd
 import ast
 
@@ -64,3 +64,4 @@ for idx, row in df_tools.iterrows():
 # DataFrame化してExcel出力
 df_result = pd.DataFrame(results)
 df_result.to_excel('検査計画書品番_検査具リスト_合計標準工数.xlsx', index=False)
+```
