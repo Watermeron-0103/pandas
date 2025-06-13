@@ -1,5 +1,32 @@
 # [pandas]
-<pre> ```python import pandas as pd import json # Your code here ``` </pre>
+
+Pseudocode / Step-by-Step Plan:
+
+Import pandas and ast modules.
+
+Read tool lists from tools_list_by_part.xlsx and standard time values from src/検査工数.xlsx.
+
+Create a dictionary mapping each tool symbol (記号) to its standard time (標準工数).
+
+For each row in the tools list:
+
+Get the part number and the tool list (as a string).
+
+If the tool list is empty, set total time to 0.
+
+Otherwise, evaluate the tool list string to a Python list.
+
+For each tool, if it has a standard time, add it to the total.
+
+Save the part number, tool list, and total standard time to results.
+
+Convert results to a DataFrame and write to an Excel file:
+検査計画書品番_検査具リスト_合計標準工数.xlsx.
+
+Short Explanation:
+This code reads an Excel file listing part numbers and their associated tool lists, looks up the standard time for each tool, calculates the total standard time for each part number, and writes the results (part number, tool list, total time) to a new Excel file.
+
+<pre> ```python
 import pandas as pd
 import ast
 
@@ -36,3 +63,4 @@ for idx, row in df_tools.iterrows():
 # DataFrame化してExcel出力
 df_result = pd.DataFrame(results)
 df_result.to_excel('検査計画書品番_検査具リスト_合計標準工数.xlsx', index=False)
+``` </pre>
