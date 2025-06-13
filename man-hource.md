@@ -1,6 +1,4 @@
-# [lambda式] ["1", "2", "3"] format
-
-How to make lambda expression in the format ["1", "2", "3"]
+# 
 ```
 import pandas as pd
 import ast
