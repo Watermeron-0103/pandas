@@ -1,5 +1,39 @@
 "groupby" in pandas is a function that allows you to "group" data by specific conditions (categories or columns) and aggregate and analyze each group.
+```python
+import pandas as pd
 
+
+data = {
+    '店舗': ['東京', '東京', '大阪', '大阪', '東京'],
+    '商品名': ['りんご', 'みかん', 'りんご', 'みかん', 'りんご'],
+    '売上': [100, 150, 120, 130, 110]
+}
+df = pd.DataFrame(data)
+
+# 店舗ごとの売上合計を集計する
+result = df.groupby('店舗')['売上'].sum()
+
+print(result)
+```
+Execution result
+```python
+店舗
+大阪    250
+東京    360
+```
+Grouping image (diagram)
+Image of "grouping" the original data:
+```css
+データセット
+｜
+├─ 東京 ── [100, 150, 110]
+│
+└─ 大阪 ── [120, 130]
+```
+Basic Writing Structure
+```python
+df.groupby('グループ化する列')['集計対象列'].集計関数()
+```
 Here are some examples
 
 # ① Basic aggregation (sum, mean, count, etc.)
