@@ -1,3 +1,7 @@
+"groupby" in pandas is a function that allows you to "group" data by specific conditions (categories or columns) and aggregate and analyze each group.
+
+Here are some examples
+
 # ① Basic aggregation (sum, mean, count, etc.)
 
 ```python
