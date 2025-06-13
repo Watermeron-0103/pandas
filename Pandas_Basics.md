@@ -1,6 +1,6 @@
-#Check the columns and change them
+Check the columns and change them
 
-How to check a column
+# How to check a column
 ```
 import pandas as pd
 
@@ -15,7 +15,7 @@ print(df.columns)
 print(df.columns.to_list())
 ```
 
-Change the column name
+# Change the column name
 ```
 # Rename columns in a DataFrame
 df.columns = ['新しいカラム1', '新しいカラム2', ...]
