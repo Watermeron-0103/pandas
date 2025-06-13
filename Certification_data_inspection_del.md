@@ -1,6 +1,6 @@
 Delete only the specified data, str
 
-```
+```python
 import pandas as pd
 
 
