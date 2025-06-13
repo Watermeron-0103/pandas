@@ -24,6 +24,7 @@ with pd.ExcelWriter(save_path, engine='openpyxl', mode='a', if_sheet_exists="rep
     df_old.to_excel(writer, sheet_name='certification_data_isp_del_old', index=False)
 ```
 
+Extract only the specified values
 ```
 import pandas as pd
 
