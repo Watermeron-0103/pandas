@@ -1,4 +1,4 @@
-# pandas
+# [pandas] test_list to json strings.
 Pseudocode / Step-by-Step Plan:
 
 Import pandas and json.
