@@ -1,7 +1,7 @@
 Check the columns and change them
 
 # How to check a column
-```
+```python
 import pandas as pd
 
 
@@ -16,7 +16,7 @@ print(df.columns.to_list())
 ```
 
 # Change the column name
-```
+```python
 # Rename columns in a DataFrame
 df.columns = ['新しいカラム1', '新しいカラム2', ...]
 
@@ -32,5 +32,6 @@ df.rename(columns={'種類 Type\n  クリティカル    Critical\n  非クリ�
 
 # How to check the type
 ```python
+print(type(df)
 
 ```
