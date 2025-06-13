@@ -4,6 +4,7 @@
 # 担当者ごとの作業時間合計
 df.groupby('担当者')['作業時間'].sum()
 ```
+Execution result
 ```python
 担当者
 佐藤    60
@@ -13,4 +14,77 @@ df.groupby('担当者')['作業時間'].sum()
 ```python
 # 作業内容ごとの平均時間
 df.groupby('作業内容')['作業時間'].mean()
+```
+
+# ② Aggregation by multiple columns (Multi-index)
+
+```python
+# 担当者ごとに、作業内容ごとの作業時間合計
+df.groupby(['担当者', '作業内容'])['作業時間'].sum()
+```
+Execution result
+```python
+担当者  作業内容
+佐藤    検査      60
+山田    報告      25
+       検査      30
+       記録      45
+鈴木    検査      20
+       記録      15
+```
+
+# ③ Apply multiple aggregation functions together
+
+```python
+# 担当者ごとに作業時間の合計・平均・回数をまとめて算出
+df.groupby('担当者')['作業時間'].agg(['sum', 'mean', 'count'])
+```
+Execution result
+```python
+        sum   mean  count
+担当者                    
+佐藤      60  60.00      1
+山田     100  33.33      3
+鈴木      35  17.50      2
+```
+
+
+# ④ Get the maximum and minimum rows for each category (idxmax, idxmin)
+
+```python
+# 担当者ごとに作業時間が最大の行を取得
+idx = df.groupby('担当者')['作業時間'].idxmax()
+df.loc[idx]
+```
+Execution result
+```python
+  担当者 作業内容  作業時間
+0   山田    検査     30
+2   鈴木    検査     20
+5   佐藤    検査     60
+
+```
+
+# ⑤ Transforming data
+
+```python
+# 担当者ごとの作業時間平均を元データに追加
+df['担当者平均'] = df.groupby('担当者')['作業時間'].transform('mean')
+```
+Execution result
+```python
+| 担当者 | 作業内容 | 作業時間 | 担当者平均 |
+| --- | ---- | ---- | ----- |
+| 山田  | 検査   | 30   | 33.33 |
+| 山田  | 記録   | 45   | 33.33 |
+| 鈴木  | 検査   | 20   | 17.50 |
+```
+
+⑥ Loop through each group
+
+```python
+# 担当者ごとに処理をループ
+for name, group in df.groupby('担当者'):
+    print(f"担当者: {name}")
+    print(group)
 ```
