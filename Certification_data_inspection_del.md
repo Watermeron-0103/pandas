@@ -23,3 +23,14 @@ with pd.ExcelWriter(save_path, engine='openpyxl', mode='a', if_sheet_exists="rep
     df.to_excel(writer, sheet_name='certification_data_isp_del', index=False)
     df_old.to_excel(writer, sheet_name='certification_data_isp_del_old', index=False)
 ```
+
+```
+import pandas as pd
+
+
+file_path = "受入れ検査品リスト.xlsx"
+df = pd.read_excel(file_path, sheet_name=0)
+
+keep_list = ["PA-IP22-610", "PA-IP19-903"]
+df = df[df["文書番号"].isin(keep_list)]
+```
