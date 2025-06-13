@@ -1,3 +1,5 @@
+Delete only the specified data, str
+
 ```
 import pandas as pd
 
