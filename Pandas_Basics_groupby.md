@@ -1,58 +1,60 @@
-"groupby" in pandas is a function that allows you to "group" data by specific conditions (categories or columns) and aggregate and analyze each group.
-```python
-import pandas as pd
+#Groupby is useful, and here's an example of how to use it:
 
-
-data = {
-    '店舗': ['東京', '東京', '大阪', '大阪', '東京'],
-    '商品名': ['りんご', 'みかん', 'りんご', 'みかん', 'りんご'],
-    '売上': [100, 150, 120, 130, 110]
-}
-df = pd.DataFrame(data)
-
-# 店舗ごとの売上合計を集計する
-result = df.groupby('店舗')['売上'].sum()
-
-print(result)
-```
+- "groupby" in pandas is a function that allows you to "group" data by specific conditions (categories or columns) and aggregate and analyze each group.
+    ```python
+    import pandas as pd
+    
+    
+    data = {
+        '店舗': ['東京', '東京', '大阪', '大阪', '東京'],
+        '商品名': ['りんご', 'みかん', 'りんご', 'みかん', 'りんご'],
+        '売上': [100, 150, 120, 130, 110]
+    }
+    df = pd.DataFrame(data)
+    
+    # 店舗ごとの売上合計を集計する
+    result = df.groupby('店舗')['売上'].sum()
+    
+    print(result)
+    ```
 Execution result
-```python
-店舗
-大阪    250
-東京    360
-```
+    ```python
+    店舗
+    大阪    250
+    東京    360
+    ```
 Grouping image (diagram)
 Image of "grouping" the original data:
-```css
-データセット
-｜
-├─ 東京 ── [100, 150, 110]
-│
-└─ 大阪 ── [120, 130]
-```
-Basic Writing Structure
-```python
-df.groupby('グループ化する列')['集計対象列'].集計関数()
-```
-Here are some examples
+    ```css
+    データセット
+    ｜
+    ├─ 東京 ── [100, 150, 110]
+    │
+    └─ 大阪 ── [120, 130]
+    ```
+- Basic Writing Structure
+    ```python
+    df.groupby('グループ化する列')['集計対象列'].集計関数()
+    ```
+    Here are some examples
 
 # ① Basic aggregation (sum, mean, count, etc.)
 
-```python
-# 担当者ごとの作業時間合計
-df.groupby('担当者')['作業時間'].sum()
-```
+    ```python
+    # 担当者ごとの作業時間合計
+    df.groupby('担当者')['作業時間'].sum()
+    ```
 Execution result
-```python
-担当者
-佐藤    60
-山田    100
-鈴木    35
-```
-```python
-# 作業内容ごとの平均時間
-df.groupby('作業内容')['作業時間'].mean()
-```
+    ```python
+    担当者
+    佐藤    60
+    山田    100
+    鈴木    35
+    ```
+    ```python
+    # 作業内容ごとの平均時間
+    df.groupby('作業内容')['作業時間'].mean()
+    ```
 
 # ② Aggregation by multiple columns (Multi-index)
 
