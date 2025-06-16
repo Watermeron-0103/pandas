@@ -1,7 +1,7 @@
 # Calculate the total man-hours based on Inspection Man-hours.xlsx
 
 
-※or Response
+- or Response
 ```python
 import pandas as pd
 import ast
