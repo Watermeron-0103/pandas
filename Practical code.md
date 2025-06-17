@@ -1,6 +1,6 @@
 
-- 部品番号列が重複していて、さらにサプライヤ列が別々の部品を抽出
 # The part number column is duplicated, and the supplier column extracts different parts.
+  - 部品番号列が重複していて、さらにサプライヤ列が別々の部品を抽出
   ```python
   import pandas as pd
   
@@ -17,8 +17,9 @@
   result = df[df["部品番号"].isin(multi_supplier_parts)]
   ```
 
-- 部品名称から指定した複数の値でジャンル分け
+
 # Categorize parts by multiple values ​​specified from part names
+  - 部品名称から指定した複数の値でジャンル分け
   ```python
   import pandas as pd
   
