@@ -48,7 +48,7 @@ Check the columns and change them
 
 # *How to check the type*
 ```python
-print(type(df)
+print(type(df))
 ```
 
 # *Extract rows other than those containing the specified value*
