@@ -47,9 +47,9 @@ Check the columns and change them
     ```
 
 # *How to check the type*
-    ```python
+```python
     print(type(df)
-    ```
+```
 
 # *Extract rows other than those containing the specified value*
 - Extract rows with values ​​other than PA-IP00-000 in the document number column
