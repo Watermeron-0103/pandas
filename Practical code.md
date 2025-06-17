@@ -145,6 +145,10 @@
         name = str(row.get('部品名称', ''))
         part_no = str(row.get('部品番号', ''))
         supplier = str(row.get('サプライヤ', ''))
+
+        # 最初の文字がアルファベットなら副資材
+        if part_no and part_no[0].isalpha():
+            return '副資材, ネジ類, 梱包材'
     
         # 部品番号で先頭一致判定（優先順）
         for prefix, genre in part_no_starts:
