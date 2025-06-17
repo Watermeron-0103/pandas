@@ -40,24 +40,34 @@
 **[新column追加version]**
   - 部分一致で高度なジャンル分け[新column追加version]
     ```python
-    import pandas as pd
-    
-    
-    file_path = "20250616_受入れ検査品リストVer1_2021.5.31  .xlsx"
-    df = pd.read_excel(file_path, sheet_name=0)
-    
-    def assign_genre(name):
-        if any(x in name for x in ['取扱説明書', '取説', 'MANUAL', 'manual', 'マニュアル']):
-            return '取扱説明書-マニュアル'
-        elif any(x in name for x in ['Oリング', 'Oリング']):
-            return 'Oリング'
-        elif any(x in name for x in ['コネクタ', 'ケーブル']):
-            return '電気部品'
-        else:
-            return 'その他'
-    
-    df['ジャンル'] = df['部品名称'].apply(assign_genre)
-    
-    df.to_excel("ジャンル分け済_受入れ検査品リスト.xlsx", index=False)
-    print("ジャンル分けして保存しました！")
+  import pandas as pd
+
+  
+  file_path = "Classification_of_part_number/20250616_受入れ検査品リストVer1_2021.5.31  .xlsx"
+  df = pd.read_excel(file_path, sheet_name=0)
+  
+  def assign_genre(row):
+      name = str(row['部品名称'])      # NaN対策でstr型
+      part_no = str(row['部品番号'])   # NaN対策でstr型
+      
+      # 部品番号による判定（先頭一致）
+      if part_no.startswith('897N'):
+          return '取扱説明書'
+      elif part_no.startswith('000Y'):
+          return '滅菌部品'
+      # 部品名称による部分一致判定
+      elif any(x in name for x in ['取扱説明書', '取説', 'MANUAL', 'manual', 'マニュアル']):
+          return '取扱説明書-マニュアル'
+      elif 'Oリング' in name:
+          return 'Oリング'
+      elif any(x in name for x in ['コネクタ', 'ケーブル']):
+          return '電気部品'
+      else:
+          return 'その他'
+  
+  df['ジャンル'] = df.apply(assign_genre, axis=1)
+  
+  df.to_excel("Classification_of_part_number/ジャンル分け済_受入れ検査品リスト.xlsx", index=False)
+  print("ジャンル分けして保存しました！")
+
     ```
