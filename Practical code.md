@@ -86,6 +86,8 @@
           return '取扱説明書'
       elif part_no.startswith('000Y'):
           return '滅菌部品'
+      elif part_no.startswith(('001B', '002B')):
+        return '光学部品'
       # 部品名称による部分一致判定
       elif any(x in name for x in ['取扱説明書', '取説', 'MANUAL', 'manual', 'マニュアル']):
           return '取扱説明書-マニュアル'
