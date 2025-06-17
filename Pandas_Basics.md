@@ -56,13 +56,11 @@ Check the columns and change them
     ```python
     # Data inspection deleted 00-000
     df = df[df["文書番号"] != "PA-IP00-000"]
-    df_old = df_old[df_old["文書番号"] != "PA-IP00-000"]
     ```
 
 - Extract rows other than those with a value in the qualifying column
     ```python
     df = df[df["認定"].isna()]
-    df_old = df_old[df_old["認定"].isna()]
     ```
 
 
