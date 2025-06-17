@@ -71,12 +71,6 @@
     
     - **Sorted by part name + part number**
     ```python
-    import pandas as pd
-    
-    
-    file_path = "Classification_of_part_number/inner_join_result.xlsx"
-    df = pd.read_excel(file_path, sheet_name=0)
-    
     def assign_genre(row):
         name = str(row['部品名称'])
         part_no = str(row['部品番号'])
@@ -99,61 +93,7 @@
         elif any(x in name for x in ['取扱説明書', '取説', 'MANUAL', 'manual', 'マニュアル', '銘板', 'ラベル']):
             return '取扱説明書-マニュアル, 機種銘板, ラベル'
         elif any(x in name for x in ['レンズ', 'プリズム', 'LG', '鏡胴']):
-            return '光学部品'
-        elif any(x in name for x in ['Oリング', 'Seal', 'パッキン', 'O-RING', 'Ｏリング']):
-            return 'Oリング'
-        elif any(x in name for x in ['先端本体']):
-            return '先端本体'
-        elif any(x in name for x in ['先端キャップ', '先端キ ャップ']):
-            return '先端キャップ'
-        elif any(x in name for x in ['ノズル']):
-            return 'ノズル'
-        elif any(x in name for x in ['鉗子栓', '鉗子栓']):
-            return '鉗子栓'
-        elif any(x in name for x in ['カシメピン']):
-            return 'カシメピン'
-        elif any(x in name for x in ['ピン', 'Pin, pin', 'PIN', '針']):
-            return 'ピン'
-        elif any(x in name for x in ['アングルゴム', 'ﾁｭｰﾌﾞ', 'チューブ', 'FCT-', 'Tube', 'パイプ', '管', 'pipe', 'tube', 'TUBE', 'hose', 'Hose']):
-            return 'チューブ'
-        elif any(x in name for x in ['IG軟性部']):
-            return 'IG軟性部金物'
-        elif any(x in name for x in ['コネクタ', 'ケーブル', '基板', 'CHA', 'ヒューズ']):
-            return 'エレキ部品'
-        elif any(x in name for x in ['バルーン', 'ﾊﾞﾙｰﾝ']):
-            return '滅菌部品'
-        elif any(x in name for x in ['ネジ', 'ナット', 'ボルト', 'ねじ', '座金', 'ワッシャー', 'ねじ類', 'ネジ類', 'ネジ類', 'ネジ類', 'ネジ類', 'ネジ類']):
-            return 'ねじ類'
-        elif any(x in name for x in ['スプリング', 'バネ', 'ばね', 'spring', 'SPRING']):
-            return 'スプリング'
-        elif any(x in name for x in ['軸受け', '軸受']):
-            return '軸受'
-        elif any(x in name for x in ['絶縁ブッシュ', '軸受']):
-            return '絶縁ブッシュ'
-        elif any(x in name for x in ['鉗子爪']):
-            return '鉗子爪'
-        elif any(x in name for x in ['リング', 'リング', 'RING', 'ring']):
-            return 'リング'
-        elif any(x in name for x in ['ナイフ']):
-            return 'ナイフ'
-        elif any(x in name for x in ['押さえ環']):
-            return '押さえ環'
-        elif any(x in name for x in ['スリーブ']):
-            return 'スリーブ'
-        elif any(x in name for x in ['ワイヤ', 'ワイヤー', 'wire', 'WIRE']):
-            return 'ワイヤ'
-        elif any(x in name for x in ['バルブ', 'Valve', 'valve']):
-            return 'バルブ'
-        elif any(x in name for x in ['電磁波吸収シート', '電磁波吸収']):
-            return '電磁波吸収シート'
-        elif any(x in name for x in ['口金', '口金']):
-            return '口金'
-        elif any(x in name for x in ['ラカン']):
-            return 'ラカン'
-        elif any(x in name for x in ['フード', 'フード']):
-            return 'フード'
-        elif any(x in name for x in ['先端ゴムキャップ']):
-            return '先端ゴムキャップ'
+        ---                        省略                        ---
         elif any(x in name for x in ['梱包材', '梱包資材', '梱包資材']):
             return '梱包材'
         elif any(x in name for x in ['ブラケット', 'Bracket', 'bracket', 'BRACKET', 'ブラケッ ト']):
@@ -165,9 +105,99 @@
         else:
             return 'その他'
     
-    df['ジャンル'] = df.apply(assign_genre, axis=1)
-    
-    df.to_excel("Classification_of_part_number/ジャンル分け済_受入れ検査品リスト.xlsx", index=False)
-    print("ジャンル分けして保存しました！")
-
+    df['ジャンル'] = df.apply(assign_genre, axis=1)    
     ```
+    - When there are many categories
+    ```python
+    # ---- 辞書やリストで分類条件をまとめる ----
+    # 部品番号によるジャンル分け（優先順に記述）
+    part_no_starts = [
+        (('897N', '058B', '202B'), '取扱説明書-マニュアル, 機種銘板, ラベル'),
+        ('006B', '光学部品'),
+        ('000Y', '滅菌部品'),
+        (('001B', '002B', '007B', '600N'), '光学部品'),
+        (('096B', '96B', '491N'), '梱包材'),
+    ]
+    # 4文字目で分けるパターン
+    part_no_fourth = {
+        ('Y', 'A'): 'ASSY部品',
+        ('K', 'M', 'S'): 'K,M,S部品',
+    }
+    
+    # 部品名称のキーワード辞書（優先順にリスト化）
+    name_keywords = [
+        (['取扱説明書', '取説', 'MANUAL', 'manual', 'マニュアル', '銘板', 'ラベル'], '取扱説明書-マニュアル, 機種銘板, ラベル'),
+        (['レンズ', 'プリズム', 'LG', '鏡胴'], '光学部品'),
+        (['Oリング', 'Seal', 'パッキン', 'O-RING', 'Ｏリング'], 'Oリング'),
+        (['先端本体'], '先端本体'),
+        (['先端キャップ', '先端キ ャップ'], '先端キャップ'),
+        (['ノズル'], 'ノズル'),
+        (['鉗子栓'], '鉗子栓'),
+        (['カシメピン'], 'カシメピン'),
+        (['ピン', 'Pin, pin', 'PIN', '針'], 'ピン'),
+        (['アングルゴム', 'ﾁｭｰﾌﾞ', 'チューブ', 'FCT-', 'Tube', 'パイプ', '管', 'pipe', 'tube', 'TUBE', 'hose', 'Hose'], 'チューブ'),
+        (['IG軟性部'], 'IG軟性部金物'),
+        (['コネクタ', 'ケーブル', '基板', 'CHA', 'ヒューズ'], 'エレキ部品'),
+        (['バルーン', 'ﾊﾞﾙｰﾝ'], '滅菌部品'),
+        (['ネジ', 'ナット', 'ボルト', 'ねじ', '座金', 'ワッシャー', 'ねじ類'], 'ねじ類'),
+        (['スプリング', 'バネ', 'ばね', 'spring', 'SPRING'], 'スプリング'),
+        (['軸受け', '軸受'], '軸受'),
+        (['絶縁ブッシュ'], '絶縁ブッシュ'),
+        (['鉗子爪'], '鉗子爪'),
+        (['リング', 'RING', 'ring'], 'リング'),
+        (['ナイフ'], 'ナイフ'),
+        (['押さえ環'], '押さえ環'),
+        (['スリーブ'], 'スリーブ'),
+        (['ワイヤ', 'ワイヤー', 'wire', 'WIRE'], 'ワイヤ'),
+        (['バルブ', 'Valve', 'valve'], 'バルブ'),
+        (['電磁波吸収シート', '電磁波吸収'], '電磁波吸収シート'),
+        (['口金'], '口金'),
+        (['ラカン'], 'ラカン'),
+        (['フード'], 'フード'),
+        (['先端ゴムキャップ'], '先端ゴムキャップ'),
+        (['梱包材', '梱包資材'], '梱包材'),
+        (['ブラケット', 'Bracket', 'bracket', 'BRACKET', 'ブラケッ ト'], 'ブラケット'),
+        (['把持ケース', 'Housing', 'housing'], '把持ケース'),
+    ]
+    
+    # サプライヤーで分ける
+    supplier_starts = [
+        ('スズキ', '取扱説明書-マニュアル, 機種銘板, ラベル'),
+        ('オスコ', 'チューブ'),
+    ]
+    
+    def assign_genre(row):
+        name = str(row.get('部品名称', ''))
+        part_no = str(row.get('部品番号', ''))
+        supplier = str(row.get('サプライヤ', ''))
+    
+        # 部品番号で先頭一致判定（優先順）
+        for prefix, genre in part_no_starts:
+            if isinstance(prefix, tuple):
+                if part_no.startswith(prefix):
+                    return genre
+            else:
+                if part_no.startswith(prefix):
+                    return genre
+    
+        # 4文字目で判定
+        if len(part_no) > 3:
+            for chars, genre in part_no_fourth.items():
+                if part_no[3] in chars:
+                    return genre
+    
+        # 部品名称の部分一致判定
+        for keywords, genre in name_keywords:
+            if any(k in name for k in keywords):
+                return genre
+    
+        # サプライヤで判定
+        for supplier_prefix, genre in supplier_starts:
+            if supplier.startswith(supplier_prefix):
+                return genre
+    
+        return 'その他'
+    
+    df['ジャンル'] = df.apply(assign_genre, axis=1)
+    ```
+      
