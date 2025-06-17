@@ -35,3 +35,28 @@
           filtered.to_excel(writer, sheet_name=key, index=False)
 
   ```
+
+# If there are too many part names, you can also automatically classify them using partial matching (keyword-based).
+  - 部分一致で高度なジャンル分け[新column追加version]
+    ```python
+    import pandas as pd
+    
+    
+    file_path = "20250616_受入れ検査品リストVer1_2021.5.31  .xlsx"
+    df = pd.read_excel(file_path, sheet_name=0)
+    
+    def assign_genre(name):
+        if any(x in name for x in ['取扱説明書', '取説', 'MANUAL', 'manual', 'マニュアル']):
+            return '取扱説明書-マニュアル'
+        elif any(x in name for x in ['Oリング', 'Oリング']):
+            return 'Oリング'
+        elif any(x in name for x in ['コネクタ', 'ケーブル']):
+            return '電気部品'
+        else:
+            return 'その他'
+    
+    df['ジャンル'] = df['部品名称'].apply(assign_genre)
+    
+    df.to_excel("ジャンル分け済_受入れ検査品リスト.xlsx", index=False)
+    print("ジャンル分けして保存しました！")
+    ```
