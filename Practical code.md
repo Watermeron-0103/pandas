@@ -37,6 +37,7 @@
   ```
 
 # If there are too many part names, you can also automatically classify them using partial matching (keyword-based).
+**[新column追加version]**
   - 部分一致で高度なジャンル分け[新column追加version]
     ```python
     import pandas as pd
