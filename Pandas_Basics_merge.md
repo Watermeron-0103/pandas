@@ -1,6 +1,7 @@
 # How to use merge
 
 - Extract items with matching on = "document number" in merge
+  - *how='inner' は、pandas の merge や join で「内部結合（inner join）」を指定するための引数です。*
     ```Python
     import pandas as pd
     
