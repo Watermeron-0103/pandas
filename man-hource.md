@@ -50,3 +50,22 @@ df_result = pd.DataFrame(results)
 df_result.to_excel('検査計画書品番_検査具リスト_合計標準工数.xlsx', index=False)
 
 ```
+
+
+- Converting a string in HH:MM:SS format to a number of seconds (in decimal format) is easy.
+    ```python
+    import pandas as pd
+    
+    # Excelファイルを読み込む
+    df = pd.read_excel("Divide_by_person_in_charge.xlsx")
+    
+    # 工数列（HH:MM:SS形式）を秒数に変換
+    df['工数（秒）'] = pd.to_timedelta(df['工数']).dt.total_seconds()
+    
+    # 結果を確認
+    print(df[['工数', '工数（秒）']])
+    
+    # Excelに保存
+    df.to_excel("工数_秒数変換後.xlsx", index=False)
+
+    ```
