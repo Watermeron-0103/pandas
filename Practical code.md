@@ -40,13 +40,13 @@
 **[新column追加version]**
   - 部分一致で高度なジャンル分け[新column追加version]
     ```python
-  import pandas as pd
-
-  
-  file_path = "Classification_of_part_number/20250616_受入れ検査品リストVer1_2021.5.31  .xlsx"
-  df = pd.read_excel(file_path, sheet_name=0)
-  
-  def assign_genre(row):
+    import pandas as pd
+    
+    
+    file_path = "Classification_of_part_number/20250616_受入れ検査品リストVer1_2021.5.31  .xlsx"
+    df = pd.read_excel(file_path, sheet_name=0)
+    
+    def assign_genre(row):
       name = str(row['部品名称'])      # NaN対策でstr型
       part_no = str(row['部品番号'])   # NaN対策でstr型
       
@@ -64,10 +64,9 @@
           return '電気部品'
       else:
           return 'その他'
-  
-  df['ジャンル'] = df.apply(assign_genre, axis=1)
-  
-  df.to_excel("Classification_of_part_number/ジャンル分け済_受入れ検査品リスト.xlsx", index=False)
-  print("ジャンル分けして保存しました！")
-
+    
+    df['ジャンル'] = df.apply(assign_genre, axis=1)
+    
+    df.to_excel("Classification_of_part_number/ジャンル分け済_受入れ検査品リスト.xlsx", index=False)
+    print("ジャンル分けして保存しました！")
     ```
