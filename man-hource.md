@@ -51,7 +51,7 @@ df_result.to_excel('検査計画書品番_検査具リスト_合計標準工数.
 
 ```
 
-
+# How to change MM:DD:SS to ss
 - Converting a string in HH:MM:SS format to a number of seconds (in decimal format) is easy.
     ```python
     import pandas as pd
