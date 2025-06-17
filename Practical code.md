@@ -74,32 +74,100 @@
     import pandas as pd
     
     
-    file_path = "Classification_of_part_number/20250616_受入れ検査品リストVer1_2021.5.31  .xlsx"
+    file_path = "Classification_of_part_number/inner_join_result.xlsx"
     df = pd.read_excel(file_path, sheet_name=0)
     
     def assign_genre(row):
-      name = str(row['部品名称'])      # NaN対策でstr型
-      part_no = str(row['部品番号'])   # NaN対策でstr型
-      
-      # 部品番号による判定（先頭一致）
-      if part_no.startswith('897N'):
-          return '取扱説明書'
-      elif part_no.startswith('000Y'):
-          return '滅菌部品'
-      elif part_no.startswith(('001B', '002B')):
-        return '光学部品'
-      # 部品名称による部分一致判定
-      elif any(x in name for x in ['取扱説明書', '取説', 'MANUAL', 'manual', 'マニュアル']):
-          return '取扱説明書-マニュアル'
-      elif 'Oリング' in name:
-          return 'Oリング'
-      elif any(x in name for x in ['コネクタ', 'ケーブル']):
-          return '電気部品'
-      else:
-          return 'その他'
+        name = str(row['部品名称'])
+        part_no = str(row['部品番号'])
+        supplire = str(row['サプライヤ'])
+    
+        if part_no.startswith(('897N', '058B', '202B')):
+            return '取扱説明書-マニュアル, 機種銘板, ラベル'
+        if part_no.startswith('006B'):
+            return '光学部品'
+        elif part_no.startswith('000Y'):
+            return '滅菌部品'
+        elif len(part_no) > 3 and part_no[3] in ('Y', 'A'):
+            return 'ASSY部品'
+        elif len(part_no) > 3 and part_no[3] in ('K', 'M', 'S'):
+            return 'K,M,S部品'
+        elif part_no.startswith(('001B', '002B', '007B', '600N')):
+            return '光学部品'
+        elif part_no.startswith(('096B', '96B', '491N')):
+            return '梱包材'
+        elif any(x in name for x in ['取扱説明書', '取説', 'MANUAL', 'manual', 'マニュアル', '銘板', 'ラベル']):
+            return '取扱説明書-マニュアル, 機種銘板, ラベル'
+        elif any(x in name for x in ['レンズ', 'プリズム', 'LG', '鏡胴']):
+            return '光学部品'
+        elif any(x in name for x in ['Oリング', 'Seal', 'パッキン', 'O-RING', 'Ｏリング']):
+            return 'Oリング'
+        elif any(x in name for x in ['先端本体']):
+            return '先端本体'
+        elif any(x in name for x in ['先端キャップ', '先端キ ャップ']):
+            return '先端キャップ'
+        elif any(x in name for x in ['ノズル']):
+            return 'ノズル'
+        elif any(x in name for x in ['鉗子栓', '鉗子栓']):
+            return '鉗子栓'
+        elif any(x in name for x in ['カシメピン']):
+            return 'カシメピン'
+        elif any(x in name for x in ['ピン', 'Pin, pin', 'PIN', '針']):
+            return 'ピン'
+        elif any(x in name for x in ['アングルゴム', 'ﾁｭｰﾌﾞ', 'チューブ', 'FCT-', 'Tube', 'パイプ', '管', 'pipe', 'tube', 'TUBE', 'hose', 'Hose']):
+            return 'チューブ'
+        elif any(x in name for x in ['IG軟性部']):
+            return 'IG軟性部金物'
+        elif any(x in name for x in ['コネクタ', 'ケーブル', '基板', 'CHA', 'ヒューズ']):
+            return 'エレキ部品'
+        elif any(x in name for x in ['バルーン', 'ﾊﾞﾙｰﾝ']):
+            return '滅菌部品'
+        elif any(x in name for x in ['ネジ', 'ナット', 'ボルト', 'ねじ', '座金', 'ワッシャー', 'ねじ類', 'ネジ類', 'ネジ類', 'ネジ類', 'ネジ類', 'ネジ類']):
+            return 'ねじ類'
+        elif any(x in name for x in ['スプリング', 'バネ', 'ばね', 'spring', 'SPRING']):
+            return 'スプリング'
+        elif any(x in name for x in ['軸受け', '軸受']):
+            return '軸受'
+        elif any(x in name for x in ['絶縁ブッシュ', '軸受']):
+            return '絶縁ブッシュ'
+        elif any(x in name for x in ['鉗子爪']):
+            return '鉗子爪'
+        elif any(x in name for x in ['リング', 'リング', 'RING', 'ring']):
+            return 'リング'
+        elif any(x in name for x in ['ナイフ']):
+            return 'ナイフ'
+        elif any(x in name for x in ['押さえ環']):
+            return '押さえ環'
+        elif any(x in name for x in ['スリーブ']):
+            return 'スリーブ'
+        elif any(x in name for x in ['ワイヤ', 'ワイヤー', 'wire', 'WIRE']):
+            return 'ワイヤ'
+        elif any(x in name for x in ['バルブ', 'Valve', 'valve']):
+            return 'バルブ'
+        elif any(x in name for x in ['電磁波吸収シート', '電磁波吸収']):
+            return '電磁波吸収シート'
+        elif any(x in name for x in ['口金', '口金']):
+            return '口金'
+        elif any(x in name for x in ['ラカン']):
+            return 'ラカン'
+        elif any(x in name for x in ['フード', 'フード']):
+            return 'フード'
+        elif any(x in name for x in ['先端ゴムキャップ']):
+            return '先端ゴムキャップ'
+        elif any(x in name for x in ['梱包材', '梱包資材', '梱包資材']):
+            return '梱包材'
+        elif any(x in name for x in ['ブラケット', 'Bracket', 'bracket', 'BRACKET', 'ブラケッ ト']):
+            return 'ブラケット'
+        elif any(x in name for x in ['把持ケース', 'Housing', 'housing']):
+            return '把持ケース'
+        elif supplire.startswith('スズキ'):
+            return '取扱説明書-マニュアル, 機種銘板, ラベル'
+        else:
+            return 'その他'
     
     df['ジャンル'] = df.apply(assign_genre, axis=1)
     
     df.to_excel("Classification_of_part_number/ジャンル分け済_受入れ検査品リスト.xlsx", index=False)
     print("ジャンル分けして保存しました！")
+
     ```
