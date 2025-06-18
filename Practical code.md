@@ -93,12 +93,11 @@
         elif any(x in name for x in ['取扱説明書', '取説', 'MANUAL', 'manual', 'マニュアル', '銘板', 'ラベル']):
             return '取扱説明書-マニュアル, 機種銘板, ラベル'
         elif any(x in name for x in ['レンズ', 'プリズム', 'LG', '鏡胴']):
-        ---                        省略                        ---
+            return '光学部品'
+        ------                     省略                     ------
         elif any(x in name for x in ['梱包材', '梱包資材', '梱包資材']):
             return '梱包材'
         elif any(x in name for x in ['ブラケット', 'Bracket', 'bracket', 'BRACKET', 'ブラケッ ト']):
-            return 'ブラケット'
-        elif any(x in name for x in ['把持ケース', 'Housing', 'housing']):
             return '把持ケース'
         elif supplire.startswith('スズキ'):
             return '取扱説明書-マニュアル, 機種銘板, ラベル'
@@ -129,7 +128,7 @@
         (['取扱説明書', '取説', 'MANUAL', 'manual', 'マニュアル', '銘板', 'ラベル'], '取扱説明書-マニュアル, 機種銘板, ラベル'),
         (['レンズ', 'プリズム', 'LG', '鏡胴'], '光学部品'),
         (['Oリング', 'Seal', 'パッキン', 'O-RING', 'Ｏリング'], 'Oリング'),
-        ---                        省略                        ---
+        ------                     省略                     ------
         (['軸受け', '軸受'], '軸受'),
         (['ブラケット', 'Bracket', 'bracket', 'BRACKET', 'ブラケッ ト'], 'ブラケット'),
         (['把持ケース', 'Housing', 'housing'], '把持ケース'),
