@@ -69,3 +69,25 @@ df_result.to_excel('検査計画書品番_検査具リスト_合計標準工数.
     df.to_excel("工数_秒数変換後.xlsx", index=False)
 
     ```
+
+- Let's try "deleting _ and spaces ( ) from the Ver. column, concatenating the part number column and the Ver. column to create a new item code column."
+
+    ```python
+    import pandas as pd
+    
+    # ファイル読み込み
+    df = pd.read_excel('20250619_受入れ検査品リストVer1_2021.5.31  .xlsx')
+    
+    # 「Ver.」列の「_」と「空白」を削除
+    df['Ver.'] = df['Ver.'].astype(str).str.replace('_', '').str.replace(' ', '')
+    
+    # 「部品番号」列と「Ver.」列を連結して「品目コード」列を作成
+    df['品目コード'] = df['部品番号'].astype(str) + df['Ver.']
+    
+    # 結果の確認
+    print(df[['部品番号', 'Ver.', '品目コード']].head())
+    
+    # 保存
+    df.to_excel('品目コード追加済.xlsx', index=False)
+
+    ```
