@@ -58,6 +58,14 @@ print(type(df))
     df = df[df["文書番号"] != "PA-IP00-000"]
     ```
 
+    - Exclude all document numbers contained in same_doc from the DataFrame.
+    ```
+    Same_doc = ["PA-IP27-442", "PA-IP27-444", 'PA-IP25-657']
+    
+    for doc in Same_doc:
+        df = df[df["文書番号"] != doc]
+    ```
+
 - Extract rows other than those with a value in the qualifying column
     ```python
     df = df[df["認定"].isna()]
