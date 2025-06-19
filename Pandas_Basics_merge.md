@@ -33,11 +33,6 @@
 
 - Example of using merge *[full code]*
     ```PYTHON
-    import pandas as pd
-    
-    isp_path = '受入れ検査品リスト.xlsx'
-    flag_path = '重要部品フラグ.xlsx'
-    
     # ファイル読み込み
     df_isp = pd.read_excel(isp_path, sheet_name=0)
     df_flag = pd.read_excel(flag_path, sheet_name=0)
