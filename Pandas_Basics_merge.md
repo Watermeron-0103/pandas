@@ -21,8 +21,6 @@
 
 - Extract items with matching on = "document number" in merge
     ```Python
-    file1 = "Classification_of_part_number/src/受入れ検査品リスト_列削除済.xlsx"
-    file2 = "Inspection_man-hours/Extract_matching_doc_num.xlsx"
     df1 = pd.read_excel(file1, sheet_name=0)
     df2 = pd.read_excel(file2, sheet_name=1)
     
