@@ -30,3 +30,25 @@
     merged_df = pd.merge(df1, df2, on='文書番号', how='left')
     ```
   - *how='left' は、pandas の merge や join で「左外部結合（left join）」を指定するための引数です。*
+
+- Example of using merge *[full code]*
+    ```PYTHON
+    import pandas as pd
+    
+    isp_path = '受入れ検査品リスト.xlsx'
+    flag_path = '重要部品フラグ.xlsx'
+    
+    # ファイル読み込み
+    df_isp = pd.read_excel(isp_path, sheet_name=0)
+    df_flag = pd.read_excel(flag_path, sheet_name=0)
+    
+    # 品目コードでマージ（品目コードが一致するもののみ）
+    df_merged = pd.merge(df_isp, df_flag, on='品目コード', how='inner', suffixes=('_isp', '_flag'))
+    
+    # さらにCP列とBECPBACA列が「一致していない」行だけ抽出
+    df_not_equal = df_merged[df_merged['CP'] != df_merged['BECPBACA']]
+    
+    # 出力
+    df_not_equal.to_excel('品目コード一致_CP不一致リスト.xlsx', index=False)
+
+    ```
