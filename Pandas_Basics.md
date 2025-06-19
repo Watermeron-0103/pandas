@@ -59,7 +59,7 @@ print(type(df))
     ```
 
     - Exclude all document numbers contained in same_doc from the DataFrame.
-    ```
+    ```python
     Same_doc = ["PA-IP27-442", "PA-IP27-444", 'PA-IP25-657']
     
     for doc in Same_doc:
