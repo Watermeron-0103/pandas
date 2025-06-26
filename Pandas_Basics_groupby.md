@@ -25,13 +25,14 @@ Execution result
     ```
 Grouping image (diagram)
 Image of "grouping" the original data:
-    ```css
-    データセット
-    ｜
-    ├─ 東京 ── [100, 150, 110]
-    │
-    └─ 大阪 ── [120, 130]
-    ```
+
+```css
+データセット
+｜
+├─ 東京 ── [100, 150, 110]
+│
+└─ 大阪 ── [120, 130]
+```
 - Basic Writing Structure
     ```python
     df.groupby('グループ化する列')['集計対象列'].集計関数()
