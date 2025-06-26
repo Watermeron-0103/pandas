@@ -64,3 +64,27 @@ for validation in validation_types:
 
 print("検査種別ごとのExcelファイルを validation_by_type フォルダに保存しました。")
 ```
+
+# Compile multiple sheets into one Excel file for each test type
+```python
+import os
+import pandas as pd
+
+# Excelファイルを読み込み
+df = pd.read_excel("日報記録_YYYYMMDD.xlsx")
+
+# 「検査種別」列でユニークな値を取得
+validation_types = df['検査種別'].dropna().unique()
+
+# 出力ファイル名
+output_file = "検査種別ごと分割.xlsx"
+
+with pd.ExcelWriter(output_file) as writer:
+    for validation in validation_types:
+        filtered_df = df[df['検査種別'] == validation]
+        # シート名は検査種別（長すぎ・特殊文字は短縮や置換）
+        sheet_name = str(validation)[:31].replace("/", "_").replace("\\", "_")
+        filtered_df.to_excel(writer, sheet_name=sheet_name, index=False)
+
+print(f"検査種別ごとにシートを分けたExcelファイルを {output_file} に保存しました。")
+```
