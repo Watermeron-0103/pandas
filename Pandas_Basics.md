@@ -58,7 +58,7 @@ print(type(df))
     df = df[df["文書番号"] != "PA-IP00-000"]
     ```
 
-    - Exclude all document numbers contained in same_doc from the DataFrame.
+    - Exclude all document numbers contained in same_doc from the DataFrame.「文書番号 列の中で、値が PA-IP00-000 ではない行を抽出する」
     ```python
     Same_doc = ["PA-IP27-442", "PA-IP27-444", 'PA-IP25-657']
     
