@@ -64,6 +64,19 @@ print(type(df))
     
     for doc in Same_doc:
         df = df[df["文書番号"] != doc]
+
+    import pandas as pd
+    
+    # 下記の方法もある
+    # 除外したい文書番号リスト
+    Same_doc = ["PA-IP27-442", "PA-IP27-444", "PA-IP25-657"]
+    
+    # 除外処理
+    df = df[~df["文書番号"].isin(Same_doc)]
+    
+    # 結果を保存（元のファイルを上書きしたくないなら別名推奨）
+    df.to_excel("受入検査品リスト_除外後.xlsx", index=False)
+
     ```
 
 - Extract rows other than those with a value in the qualifying column
