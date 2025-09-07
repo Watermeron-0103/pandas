@@ -1,4 +1,4 @@
-#Groupby is useful, and here's an example of how to use it:
+# Groupby is useful, and here's an example of how to use it:
 
 - "groupby" in pandas is a function that allows you to "group" data by specific conditions (categories or columns) and aggregate and analyze each group.
     ```python
