@@ -2,7 +2,8 @@
 
 ## 目的
 - **ケース①**: 受入れ検査リストの中から、重要部品フラグに登録されている品目だけを抽出する。  
-- **ケース②**: 両方の情報を突き合わせ、受入れ検査リストに重要部品フラグの情報を付与する。
+- **ケース②**: 両方の情報を突き合わせ、受入れ検査リストに重要部品フラグの情報を付与する。  
+- **ケース③**: 双方のリストで不一致（どちらか片方にしか存在しない品目）を抽出する。  
 
 ## サンプルコード
 
@@ -32,3 +33,19 @@ df_merged = pd.merge(df_list, df_flag, on="品目", how="inner")
 
 # 結果保存
 df_merged.to_excel("受入リスト_マスター付き.xlsx", index=False)
+
+# ------------------------------------------------
+# ケース③: 不一致の抽出
+# ------------------------------------------------
+# 方法1: isin を使う
+df_list_unmatched = df_list[~df_list["品目"].isin(df_flag["品目"])]  # 受入リストにあってマスタにない
+df_flag_unmatched = df_flag[~df_flag["品目"].isin(df_list["品目"])]  # マスタにあって受入リストにない
+
+# 方法2: merge を使って indicator=True で確認
+df_outer = pd.merge(df_list, df_flag, on="品目", how="outer", indicator=True)
+df_left_only  = df_outer[df_outer["_merge"] == "left_only"]   # 受入リストだけ
+df_right_only = df_outer[df_outer["_merge"] == "right_only"]  # マスタだけ
+
+# 保存（必要に応じて）
+df_list_unmatched.to_excel("受入リスト_不一致.xlsx", index=False)
+df_flag_unmatched.to_excel("品目マスタ_不一致.xlsx", index=False)
