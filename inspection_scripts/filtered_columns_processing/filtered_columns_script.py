@@ -3,7 +3,7 @@ filtered_columns_script.py
 ==========================
 
 This script reads `受入れ検査品リスト.xlsx` and `filtered_columns.xlsx`,
-normalizes their column names (full‑width/half‑width, leading/trailing
+normalizes their column names (full-width/half-width, leading/trailing
 whitespace, and case differences), and produces two output files:
 
 1. A version of the source where all columns that match names in the
@@ -17,7 +17,23 @@ clarity.
 Place this script in the same directory as the two input Excel files and run
 it with a Python interpreter. The output files will be written to the
 current directory with names beginning with `pattern1_` and `pattern2_`.
+
+
+--- 日本語訳 ---
+本スクリプトは `受入れ検査品リスト.xlsx` と `filtered_columns.xlsx` を読み込み、
+列名を正規化（全角/半角の統一、前後の空白の除去、大小文字の差異の吸収）したうえで、
+次の 2 種類の出力ファイルを作成します。
+
+1. 参照リストの列名と一致する列をすべて削除した版（pattern1）。
+2. 参照リストに存在しない列のみを残した版（pattern2）。
+
+両者の結果は実質的に同一ですが、意図を明確にするため両方を出力します。
+
+使い方：
+このスクリプトを 2 つの入力 Excel ファイルと同じディレクトリに置き、Python で実行してください。
+出力ファイルはカレントディレクトリに `pattern1_` および `pattern2_` で始まる名前で保存されます。
 """
+
 
 import unicodedata
 from pathlib import Path
