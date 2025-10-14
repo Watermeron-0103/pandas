@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 filtered_columns_script.py
 ==========================
@@ -18,7 +19,6 @@ Place this script in the same directory as the two input Excel files and run
 it with a Python interpreter. The output files will be written to the
 current directory with names beginning with `pattern1_` and `pattern2_`.
 
-
 --- 日本語訳 ---
 本スクリプトは `受入れ検査品リスト.xlsx` と `filtered_columns.xlsx` を読み込み、
 列名を正規化（全角/半角の統一、前後の空白の除去、大小文字の差異の吸収）したうえで、
@@ -34,6 +34,7 @@ current directory with names beginning with `pattern1_` and `pattern2_`.
 出力ファイルはカレントディレクトリに `pattern1_` および `pattern2_` で始まる名前で保存されます。
 """
 
+from __future__ import annotations
 
 import unicodedata
 from pathlib import Path
@@ -78,8 +79,14 @@ def load_reference_names(ref_path: Path) -> set[str]:
             break
     if first_col is None:
         return set()
-    names = (df[first_col].dropna().astype(str).map(str.strip)
-              .loc[lambda s: s != ""]).tolist()
+    names = (
+        df[first_col]
+        .dropna()
+        .astype(str)
+        .map(str.strip)
+        .loc[lambda s: s != ""]
+        .tolist()
+    )
     return {normalize_name(name) for name in names}
 
 
@@ -112,8 +119,8 @@ def process_files(src_path: Path, ref_path: Path, out_dir: Path) -> tuple[Path, 
 
     # Prepare output file names.
     out_dir.mkdir(parents=True, exist_ok=True)
-    pattern1_path = out_dir / "pattern1_受入れ検査品リスト_参照に一致する列を削除.xlsx"
-    pattern2_path = out_dir / "pattern2_受入れ検査品リスト_参照に無い列だけ.xlsx"
+    pattern1_path = out_dir / f"pattern1_{src_path.stem}_参照に一致する列を削除.xlsx"
+    pattern2_path = out_dir / f"pattern2_{src_path.stem}_参照に無い列だけ.xlsx"
 
     with pd.ExcelWriter(pattern1_path, engine="openpyxl") as writer:
         pattern1_df.to_excel(writer, index=False)
@@ -129,6 +136,11 @@ def main() -> None:
     src_file = Path("受入れ検査品リスト.xlsx")
     ref_file = Path("filtered_columns.xlsx")
     out_dir = Path(".")
+
+    if not src_file.exists():
+        raise FileNotFoundError(f"Source file not found: {src_file}")
+    if not ref_file.exists():
+        raise FileNotFoundError(f"Reference file not found: {ref_file}")
 
     pattern1, pattern2 = process_files(src_file, ref_file, out_dir)
     print(f"Pattern1 output written to: {pattern1}")
