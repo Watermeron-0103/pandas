@@ -1,47 +1,43 @@
 import re
 import unicodedata
-import pathlib
+from pathlib import Path
 import pandas as pd
 
 
 # ===== settings =====
-FUKLE_UKEI = "src/受入れ検査品リスト.xlsx"
+FILE_UKEI = "src/受入れ検査品リスト.xlsx"
 SHEET_UKEI = "検査計画書"
 COL_UKEI = "検収対象品"
 
 OUTPUT_XLSX = "out/検収品一覧.xlsx"
+OUTPUT_SHEET = "市販品一覧"
 
 # ===== functions =====
-
-
 def nfkc(s) -> str:
     return unicodedata.normalize("NFKC", str(s)).strip()
 
+def commercially_available_parts_list(file_path: str) -> pd.DataFrame:
+    """行形状はそのまま、検収対象品が“非空の文字列”の行のみ残す"""
+    df = pd.read_excel(file_path, sheet_name=SHEET_UKEI)
 
-def commercially_available_parts_list(debug: bool=False) -> list[str]:
-    df = pd.read_excel(FUKLE_UKEI, sheet_name=SHEET_UKEI, usecols=[COL_UKEI])
-    if debug: print("raw rows:", len(df))
+    # NaN は空文字に、その他は必ず文字列化して正規化
+    df["_norm"] = df[COL_UKEI].apply(lambda x: "" if pd.isna(x) else nfkc(x))
 
-    s = df[COL_UKEI].dropna().map(nfkc)   # NFKC + strip
-    s = s[s.ne("")]                       # 空文字だけ除外
-    parts = sorted(pd.unique(s))          # ユニーク + ソート
-
-    if debug:
-        print("after dropna/normalize:", len(s))
-        print("unique parts:", len(parts))
-    return list(parts)
-
-
+    # 非空のみ採用（"1" も 1 も通る）
+    mask = df["_norm"].ne("")
+    out = df.loc[mask].drop(columns=["_norm"]).copy()
+    return out
 
 def main():
-    parts = commercially_available_parts_list()
-    print(f"市販品リスト: {len(parts)}件")
+    Path("out").mkdir(exist_ok=True)
 
-    # Excel出力
-    pathlib.Path("out").mkdir(exist_ok=True)
-    df_out = pd.DataFrame(parts, columns=["品名"])
-    df_out.to_excel(OUTPUT_XLSX, index=False)
-    print(f"Excel出力: {OUTPUT_XLSX}")
+    out_df = commercially_available_parts_list(FILE_UKEI)
+    print(f"抽出: {len(out_df)} 行")
+
+    # 期待形で書き出し（毎回クリーンに上書き）
+    with pd.ExcelWriter(OUTPUT_XLSX, engine="openpyxl", mode="w") as w:
+        out_df.to_excel(w, sheet_name=OUTPUT_SHEET, index=False)
+    print(f"Excel出力 -> {OUTPUT_XLSX}（シート: {OUTPUT_SHEET}）")
 
 if __name__ == "__main__":
     main()
