@@ -21,7 +21,9 @@ This script helps identify unique part codes across material and assembly sheets
 
 4. **Output** – The resulting data frames, including the original data and added columns `ユニーク_シート内`, `ユニーク_全体`, and the intermediate `正規化キー` (normalized key), are written back to a new Excel file (`材料ASSYBOM_照合_3出力_ユニーク付与.xlsx`).  Each sheet retains its original name.
 
-## Usage
+## Usage　使用方法
 
 Adjust the file names, sheet names and column names at the top of the script to match your workbook.  Then run the script with Python.  It will read the input workbook, compute the uniqueness flags, and output a new workbook in the same directory.
 
+日本語訳：
+スクリプトの先頭にあるファイル名、シート名、列名をワークブックに合わせて調整してください。その後、Pythonでスクリプトを実行します。入力ワークブックを読み取り、一意性フラグを計算し、同じディレクトリに新しいワークブックを出力します。
