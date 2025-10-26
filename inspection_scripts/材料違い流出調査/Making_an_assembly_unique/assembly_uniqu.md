@@ -2,7 +2,7 @@
 
 This script helps identify unique part codes across material and assembly sheets in an Excel workbook. It is designed to support quality control investigations where you need to check for duplicate components and trace them through different BOM (Bill of Materials) views.
 
-日本語訳：
+日本語訳：  
 このスクリプトは、Excelブック内の材料シートとアセンブリシート全体にわたって、固有の部品コードを識別するのに役立ちます。重複した部品の有無を確認し、複数のBOM（部品表）ビューで追跡する必要がある品質管理調査をサポートするように設計されています。
 
 
