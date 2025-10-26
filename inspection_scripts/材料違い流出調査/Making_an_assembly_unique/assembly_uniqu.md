@@ -12,6 +12,15 @@ This script helps identify unique part codes across material and assembly sheets
    - A materials sheet (default name: `1_材料(単品)+assemblyフラグ`) which lists individual parts.
    - An assembly sheet (default name: `2_ASSYBOM+材料フラグ`) which lists assemblies and their constituent parts.
    - Both sheets must have a column named `部品No.` that contains the part numbers to analyse.
+*日本語訳：*  
+**動作概要（How it works）**
+**入力設定（Input settings）** – このスクリプトは、少なくとも2つのワークシートを含む Excel ファイル（`FILE_MA` で指定）を前提とします。
+
+* **材料シート**（既定名：`1_材料(単品)+assemblyフラグ`）：単品部品の一覧。
+* **アセンブリシート**（既定名：`2_ASSYBOM+材料フラグ`）：アセンブリとその構成部品の一覧。
+
+どちらのシートにも **「部品No.」** という列が必要で、解析対象の部品番号を格納していること。
+
 
 2. **Normalization** – Part numbers are cleaned and normalized using Unicode NFKC normalization.  Full‑width spaces are converted to half‑width, various kinds of dashes are unified to `'-'`, zero‑width and non‑breaking spaces are removed, and case is coerced to upper (or lower) if needed.  This ensures that visually similar part codes are treated the same.
 
