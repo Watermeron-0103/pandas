@@ -8,7 +8,7 @@ EXCEL_PATH = Path("out/受入れ検査品リスト_削除後.xlsx")
 COL_NAME = "部品名称"   # 例: "品名" とかならそこに変える
 
 # ヘッダー行が2行目にあるなら header=1 とかにする
-df = pd.read_excel(EXCEL_PATH, sheet_name=0, header=1, dtype=str)
+df = pd.read_excel(EXCEL_PATH, sheet_name=0, dtype=str)
 
 # 「部品名称」に「先端キャップ」を含む行だけTrueになるマスク
 mask = df[COL_NAME].str.contains("先端キャップ", na=False)
