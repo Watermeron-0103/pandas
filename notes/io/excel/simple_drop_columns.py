@@ -10,7 +10,7 @@ df = pd.read_excel(EXCEL_PATH, sheet_name=0)
 ref_df = pd.read_excel(REF_PATH, sheet_name=0)
 
 # ③ リストから「削除したい列名」の一覧を作る
-drop_cols = drop_list_df["カラム名"].dropna().tolist()
+drop_cols = ref_df["カラム名"].dropna().tolist()
 
 # ④ 本体からそのカラムたちを削除する
 df_after = df.drop(columns=drop_cols, errors='ignore')
